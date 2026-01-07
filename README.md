@@ -1,86 +1,107 @@
-# PowerShell Utils
+# Shell Utils
 
-A collection of PowerShell utilities and scripts to supercharge your command-line productivity.
+A collection of shell utilities and scripts to supercharge your command-line productivity across multiple platforms and shells.
 
-## 📦 Available Utilities
+## Supported Shells
 
-### [Profile Scripts](profile-scripts/)
+| Shell | Platform | Directory |
+|-------|----------|-----------|
+| PowerShell | Windows, Linux, macOS | [powershell/](powershell/) |
+| Bash | Linux, macOS | [bash/](bash/) |
+| Zsh | Linux, macOS | [zsh/](zsh/) |
 
-Essential scripts to add to your PowerShell profile for enhanced daily workflows.
+## Available Utilities
 
-- **[Project Navigator](docs/project-navigator.md)** - Quickly jump between development projects with tab completion
-  ```powershell
-  cdp myproject  # Navigate instantly to any project
-  ```
+### Project Navigator
 
-## 🚀 Quick Start
+Quickly jump between development projects with tab completion.
 
-1. Browse the utilities above
-2. Click on any utility to see its detailed documentation
-3. Follow the installation instructions for each utility you want to use
+```bash
+cdp myproject  # Navigate instantly to any project
+```
 
-## 📋 Requirements
+| Shell | Script | Documentation |
+|-------|--------|---------------|
+| PowerShell | [powershell/profile-scripts/](powershell/profile-scripts/) | [Full Docs](docs/project-navigator.md) |
+| Bash | [bash/profile-scripts/](bash/profile-scripts/) | [Full Docs](docs/project-navigator.md) |
+| Zsh | [zsh/profile-scripts/](zsh/profile-scripts/) | [Full Docs](docs/project-navigator.md) |
 
-- PowerShell 5.1 or later (PowerShell 7+ recommended)
-- Windows, Linux, or macOS
+## Quick Start
 
-## 💡 Usage Philosophy
+1. Choose your shell from the directories above
+2. Browse the available utilities
+3. Follow the installation instructions for each utility
+
+## Installation by Shell
+
+### PowerShell
+
+```powershell
+# Add to your $PROFILE
+. /path/to/script.ps1
+
+# Reload profile
+. $PROFILE
+```
+
+### Bash
+
+```bash
+# Add to ~/.bashrc
+source /path/to/script.sh
+
+# Reload profile
+source ~/.bashrc
+```
+
+### Zsh
+
+```zsh
+# Add to ~/.zshrc
+source /path/to/script.zsh
+
+# Reload profile
+source ~/.zshrc
+```
+
+## Requirements
+
+| Shell | Version | Notes |
+|-------|---------|-------|
+| PowerShell | 5.1+ | PowerShell 7+ recommended |
+| Bash | 4.0+ | macOS ships with 3.x, use `brew install bash` |
+| Zsh | 5.0+ | Default on macOS Catalina+ |
+
+## Usage Philosophy
 
 These utilities are designed to be:
+- **Cross-platform** - Same functionality across shells
 - **Lightweight** - No heavy dependencies
 - **Modular** - Use only what you need
 - **Customizable** - Easy to adapt to your workflow
 - **Well-documented** - Clear instructions and examples
 
-## 🛠️ Installation Tips
-
-### Finding Your PowerShell Profile
-
-```powershell
-# See your profile path
-$PROFILE
-
-# Open your profile in notepad
-notepad $PROFILE
-
-# If profile doesn't exist, create it
-New-Item -Path $PROFILE -Type File -Force
-```
-
-### Reloading Your Profile
-
-After making changes:
-```powershell
-. $PROFILE
-```
-
-### Execution Policy
-
-If scripts don't run, you may need to adjust your execution policy:
-```powershell
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Whether it's:
 - Bug fixes
 - New utilities
 - Documentation improvements
 - Feature suggestions
+- Ports to other shells
 
 Feel free to open an issue or submit a pull request.
 
-## 📄 License
+## License
 
 MIT License - Free to use, modify, and distribute.
 
-## 🔗 Resources
+## Resources
 
 - [PowerShell Documentation](https://docs.microsoft.com/powershell/)
-- [PSReadLine Module](https://github.com/PowerShell/PSReadLine)
-- [PowerShell Gallery](https://www.powershellgallery.com/)
+- [Bash Reference Manual](https://www.gnu.org/software/bash/manual/)
+- [Zsh Documentation](https://zsh.sourceforge.io/Doc/)
 
 ---
 
-**Star ⭐ this repo if you find it useful!**
+**Star this repo if you find it useful!**

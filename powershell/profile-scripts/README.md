@@ -4,7 +4,7 @@ A collection of useful PowerShell profile scripts to enhance your development wo
 
 ## Available Scripts
 
-### 📁 [Project Navigator](../docs/project-navigator.md)
+### 📁 [Project Navigator](../../docs/project-navigator.md)
 
 Quickly navigate between your development projects with tab completion and interactive menus.
 
@@ -19,7 +19,7 @@ cdp [TAB][TAB]  # See all projects
 cdp myapp       # Navigate to project
 ```
 
-[📖 Full Documentation](../docs/project-navigator.md)
+[📖 Full Documentation](../../docs/project-navigator.md)
 
 ---
 
