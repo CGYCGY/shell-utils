@@ -7,7 +7,7 @@ A simple utility that lets you quickly navigate between your development project
 - **Quick Navigation**: Jump to any project with a short alias
 - **Tab Completion**: Press `TAB` to see all available projects
 - **Interactive Menu**: Visual selection menu (PowerShell/Zsh)
-- **Easy to Extend**: Add new projects on-the-fly
+- **Easy to Extend**: `cdp add <name>` saves the current directory to the script file, no manual editing
 - **Color-coded Output**: Clear visual feedback
 - **Cross-platform**: Works on Windows, Linux, and macOS
 
@@ -48,7 +48,7 @@ Download `project-navigator.ps1` to your local machine.
 
 #### Step 2: Customize Your Projects
 
-Open `project-navigator.ps1` and edit the `$global:Projects` hashtable:
+Open `project-navigator.ps1` and edit the `$global:Projects` hashtable (or skip this and use `cdp add` later):
 
 ```powershell
 $global:Projects = @{
@@ -90,7 +90,7 @@ Download `project-navigator.sh` to your local machine.
 
 #### Step 2: Customize Your Projects
 
-Open `project-navigator.sh` and edit the `PROJECTS` array:
+Open `project-navigator.sh` and edit the `PROJECTS` array (or skip this and use `cdp add` later):
 
 ```bash
 declare -gA PROJECTS=(
@@ -129,7 +129,7 @@ Download `project-navigator.zsh` to your local machine.
 
 #### Step 2: Customize Your Projects
 
-Open `project-navigator.zsh` and edit the `PROJECTS` array:
+Open `project-navigator.zsh` and edit the `PROJECTS` array (or skip this and use `cdp add` later):
 
 ```zsh
 typeset -gA PROJECTS=(
@@ -192,19 +192,39 @@ $ cdp [TAB]
 backend   frontend   myapp   website
 ```
 
-### Add a Project (Current Session)
+### Add a Project
+
+Saved directly into the script file, so it persists across sessions. A single rolling backup is kept at `<script>.bak`.
 
 ```bash
 # Add current directory
-$ add_project newproj
-✓ Added project 'newproj' -> /current/directory
+$ cd ~/Projects/new-thing
+$ cdp add newproj
+✓ Added 'newproj' -> /home/user/Projects/new-thing
 
 # Add specific path
-$ add_project utils /path/to/utils
-✓ Added project 'utils' -> /path/to/utils
+$ cdp add utils /path/to/utils
+✓ Added 'utils' -> /path/to/utils
+
+# Re-adding an existing name updates its path
+$ cdp add utils /new/path
+✓ Updated 'utils' -> /new/path
 ```
 
-**Note:** Projects added this way only last for the current session. Add them to the script file to persist.
+### Remove a Project
+
+```bash
+$ cdp rm utils
+✓ Removed 'utils'
+```
+
+### Tab Completion for Subcommands
+
+```bash
+$ cdp [TAB]          # add rm backend frontend myapp website
+$ cdp rm [TAB]       # project names
+$ cdp add name [TAB] # directories (Bash/Zsh)
+```
 
 ---
 
@@ -258,6 +278,10 @@ Comment out this line in the script:
 ---
 
 ## Troubleshooting
+
+### `cdp add` says it saved but nothing changed
+
+The script rewrites its own file, so it must be writable and sourced from its real location (not piped or `eval`ed). Check that `<script>.bak` was created next to it.
 
 ### Tab completion not working
 

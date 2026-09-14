@@ -17,7 +17,8 @@ A collection of shell utilities and scripts to supercharge your command-line pro
 Quickly jump between development projects with tab completion.
 
 ```bash
-cdp myproject  # Navigate instantly to any project
+cdp myproject      # Navigate instantly to any project
+cdp add myproject  # Save the current directory, persisted to the script
 ```
 
 | Shell | Script | Documentation |

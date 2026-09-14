@@ -11,13 +11,14 @@ Quickly navigate between your development projects with tab completion and descr
 **Key Features:**
 - Jump to projects using short aliases (e.g., `cdp myapp`)
 - Tab completion with path descriptions
-- Easy project management
+- `cdp add` / `cdp rm` save changes to the script file
 - oh-my-zsh compatible
 
 **Quick Start:**
 ```zsh
 cdp [TAB][TAB]  # See all projects with paths
 cdp myapp       # Navigate to project
+cdp add newproj # Save current directory as a project
 ```
 
 [Full Documentation](../../docs/project-navigator.md)
