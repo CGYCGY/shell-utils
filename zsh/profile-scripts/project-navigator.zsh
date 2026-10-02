@@ -19,6 +19,7 @@
 #   cdp <name>             jump to project
 #   cdp add <name> [path]  add/update project (default: cwd), saved to this file
 #   cdp rm <name>          remove project, saved to this file
+#   cdp help               show usage
 # ============================================
 
 # Absolute path of this file; `cdp add`/`cdp rm` rewrite the PROJECTS block in it
@@ -58,15 +59,26 @@ _pn_list() {
     done
 }
 
+_pn_help() {
+    print -P "%F{cyan}Usage:%f"
+    echo "  cdp                    list projects"
+    echo "  cdp <name>             jump to project"
+    echo "  cdp add <name> [path]  add/update project (default: current dir)"
+    echo "  cdp rm <name>          remove project"
+    echo "  cdp help               show this help"
+}
+
 cdp() {
     local cmd="$1"
 
     case "$cmd" in
         "")
             _pn_list; return 0 ;;
+        help|-h|--help)
+            _pn_help; return 0 ;;
         add)
             local name="$2" dir="${3:-$PWD}"
-            if [[ -z "$name" || "$name" == add || "$name" == rm ]]; then
+            if [[ -z "$name" || "$name" == (add|rm|help) ]]; then
                 print -P "%F{red}Usage: cdp add <name> [path]%f"; return 1
             fi
             dir="$(cd "$dir" 2>/dev/null && pwd)" || { print -P "%F{red}✗ Not a directory: ${3:-$PWD}%f"; return 1; }
@@ -87,7 +99,7 @@ cdp() {
         print -P "%F{green}✓ Switched to: $cmd%f"
     else
         print -P "%F{red}✗ Project '$cmd' not found%f"
-        print -P "%F{242}Run 'cdp' to see available projects, 'cdp add <name>' to add one%f"
+        print -P "%F{242}Run 'cdp' to see available projects, 'cdp help' for usage%f"
         return 1
     fi
 }
@@ -100,7 +112,7 @@ _cdp() {
     done
 
     if (( CURRENT == 2 )); then
-        local -a subcmds=('add:add or update a project' 'rm:remove a project')
+        local -a subcmds=('add:add or update a project' 'rm:remove a project' 'help:show usage')
         _describe -t commands 'command' subcmds
         _describe -t projects 'project' project_list
     elif [[ "${words[2]}" == rm && CURRENT == 3 ]]; then

@@ -12,6 +12,7 @@
 #   cdp <name>             jump to project
 #   cdp add <name> [path]  add/update project (default: cwd), saved to this file
 #   cdp rm <name>          remove project, saved to this file
+#   cdp help               show usage
 # ============================================
 
 # Path of this file; `cdp add`/`cdp rm` rewrite the $global:Projects block in it
@@ -77,6 +78,10 @@ function cdp {
     .EXAMPLE
         cdp rm myapp
         Removes 'myapp'.
+
+    .EXAMPLE
+        cdp help
+        Shows usage.
     #>
     param(
         [Parameter(Position=0)]
@@ -96,8 +101,17 @@ function cdp {
     }
 
     switch ($ProjectName) {
+        { $_ -in @('help', '--help') } {
+            Write-Host "Usage:" -ForegroundColor Cyan
+            Write-Host "  cdp                    list projects"
+            Write-Host "  cdp <name>             jump to project"
+            Write-Host "  cdp add <name> [path]  add/update project (default: current dir)"
+            Write-Host "  cdp rm <name>          remove project"
+            Write-Host "  cdp help               show this help"
+            return
+        }
         'add' {
-            if ([string]::IsNullOrEmpty($Name) -or $Name -in @('add', 'rm')) {
+            if ([string]::IsNullOrEmpty($Name) -or $Name -in @('add', 'rm', 'help')) {
                 Write-Host "Usage: cdp add <name> [path]" -ForegroundColor Red
                 return
             }
@@ -128,7 +142,7 @@ function cdp {
         Write-Host "✓ Switched to: $ProjectName" -ForegroundColor Green
     } else {
         Write-Host "✗ Project '$ProjectName' not found" -ForegroundColor Red
-        Write-Host "Run 'cdp' to see available projects, 'cdp add <name>' to add one" -ForegroundColor Gray
+        Write-Host "Run 'cdp' to see available projects, 'cdp help' for usage" -ForegroundColor Gray
     }
 }
 
@@ -137,7 +151,7 @@ $script:ProjectCompleter = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
     $candidates = @()
     if ($parameterName -eq 'ProjectName') {
-        $candidates = @('add', 'rm') + @($global:Projects.Keys)
+        $candidates = @('add', 'rm', 'help') + @($global:Projects.Keys)
     } elseif ($parameterName -eq 'Name' -and $commandAst.CommandElements[1].Extent.Text -eq 'rm') {
         $candidates = @($global:Projects.Keys)
     }

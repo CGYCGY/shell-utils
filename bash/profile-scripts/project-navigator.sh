@@ -18,6 +18,7 @@
 #   cdp <name>             jump to project
 #   cdp add <name> [path]  add/update project (default: cwd), saved to this file
 #   cdp rm <name>          remove project, saved to this file
+#   cdp help               show usage
 # ============================================
 
 # Absolute path of this file; `cdp add`/`cdp rm` rewrite the PROJECTS block in it
@@ -56,15 +57,26 @@ _pn_list() {
     done
 }
 
+_pn_help() {
+    echo -e "\033[36mUsage:\033[0m"
+    echo "  cdp                    list projects"
+    echo "  cdp <name>             jump to project"
+    echo "  cdp add <name> [path]  add/update project (default: current dir)"
+    echo "  cdp rm <name>          remove project"
+    echo "  cdp help               show this help"
+}
+
 cdp() {
     local cmd="$1"
 
     case "$cmd" in
         "")
             _pn_list; return 0 ;;
+        help|-h|--help)
+            _pn_help; return 0 ;;
         add)
             local name="$2" path="${3:-$PWD}"
-            if [[ -z "$name" || "$name" == add || "$name" == rm ]]; then
+            if [[ -z "$name" || "$name" == add || "$name" == rm || "$name" == help ]]; then
                 echo -e "\033[31mUsage: cdp add <name> [path]\033[0m"; return 1
             fi
             path="$(cd "$path" 2>/dev/null && pwd)" || { echo -e "\033[31m✗ Not a directory: ${3:-$PWD}\033[0m"; return 1; }
@@ -85,7 +97,7 @@ cdp() {
         echo -e "\033[32m✓ Switched to: $cmd\033[0m"
     else
         echo -e "\033[31m✗ Project '$cmd' not found\033[0m"
-        echo -e "\033[90mRun 'cdp' to see available projects, 'cdp add <name>' to add one\033[0m"
+        echo -e "\033[90mRun 'cdp' to see available projects, 'cdp help' for usage\033[0m"
         return 1
     fi
 }
@@ -94,7 +106,7 @@ cdp() {
 _cdp_completions() {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     if (( COMP_CWORD == 1 )); then
-        COMPREPLY=($(compgen -W "add rm ${!PROJECTS[*]}" -- "$cur"))
+        COMPREPLY=($(compgen -W "add rm help ${!PROJECTS[*]}" -- "$cur"))
     elif [[ "${COMP_WORDS[1]}" == rm && COMP_CWORD == 2 ]]; then
         COMPREPLY=($(compgen -W "${!PROJECTS[*]}" -- "$cur"))
     elif [[ "${COMP_WORDS[1]}" == add && COMP_CWORD == 3 ]]; then
