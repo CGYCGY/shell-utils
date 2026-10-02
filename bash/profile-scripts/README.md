@@ -12,12 +12,17 @@ Quickly navigate between your development projects with tab completion.
 - Jump to projects using short aliases (e.g., `cdp myapp`)
 - Tab completion support
 - `cdp add` / `cdp rm` save changes to the script file
+- `cdp help` shows usage
 
 **Quick Start:**
 ```bash
-cdp [TAB][TAB]  # See all projects
-cdp myapp       # Navigate to project
-cdp add newproj # Save current directory as a project
+cdp                       # List all projects
+cdp [TAB][TAB]            # See all projects
+cdp myapp                 # Navigate to project
+cdp add newproj           # Save current directory as a project
+cdp add newproj /some/dir # Save a specific path (re-adding a name updates it)
+cdp rm newproj            # Remove a project
+cdp help                  # Show usage
 ```
 
 [Full Documentation](../../docs/project-navigator.md)

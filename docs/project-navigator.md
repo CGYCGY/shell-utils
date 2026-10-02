@@ -7,7 +7,8 @@ A simple utility that lets you quickly navigate between your development project
 - **Quick Navigation**: Jump to any project with a short alias
 - **Tab Completion**: Press `TAB` to see all available projects
 - **Interactive Menu**: Visual selection menu (PowerShell/Zsh)
-- **Easy to Extend**: `cdp add <name>` saves the current directory to the script file, no manual editing
+- **Easy to Manage**: `cdp add` / `cdp rm` save changes to the script file, no manual editing
+- **Built-in Help**: `cdp help` shows all commands
 - **Color-coded Output**: Clear visual feedback
 - **Cross-platform**: Works on Windows, Linux, and macOS
 
@@ -164,6 +165,14 @@ source ~/.zshrc
 
 All commands work the same across shells.
 
+| Command | Description |
+|---------|-------------|
+| `cdp` | List all projects |
+| `cdp <name>` | Jump to a project |
+| `cdp add <name> [path]` | Add a project (default: current directory); re-adding a name updates its path |
+| `cdp rm <name>` | Remove a project |
+| `cdp help` | Show usage |
+
 ### List All Projects
 
 ```bash
@@ -218,10 +227,33 @@ $ cdp rm utils
 ✓ Removed 'utils'
 ```
 
+### Rename a Project
+
+Remove it and add it back under the new name:
+
+```bash
+$ cdp rm utils
+$ cdp add tools /path/to/utils
+```
+
+### Show Help
+
+```bash
+$ cdp help
+Usage:
+  cdp                    list projects
+  cdp <name>             jump to project
+  cdp add <name> [path]  add/update project (default: current dir)
+  cdp rm <name>          remove project
+  cdp help               show this help
+```
+
+`cdp -h` / `cdp --help` also work (PowerShell: `cdp --help`, or `Get-Help cdp` for the full help).
+
 ### Tab Completion for Subcommands
 
 ```bash
-$ cdp [TAB]          # add rm backend frontend myapp website
+$ cdp [TAB]          # add rm help backend frontend myapp website
 $ cdp rm [TAB]       # project names
 $ cdp add name [TAB] # directories (Bash/Zsh)
 ```
